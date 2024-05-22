@@ -7,7 +7,7 @@
 
 class EchoServiceInstaller : public ServiceInstaller {
 private:
-  // 패킷을 수신할 포트
+  // 패킷을 수신할 포트...
   short listenPort_;
 
 public:
