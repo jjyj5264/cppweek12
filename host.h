@@ -18,9 +18,17 @@ class Host : public Node {
   // 설치된 서비스 목록
   std::vector<Service *> services_;
 
+  // 설치된 서비스들이 사용하는 포트 목록
+  std::vector<int> ports_;
+
   public:
   Address address() { return address_; }
   Host(Address address) : address_(address) {}
+
+  // 포트 목록에 포트를 추가한다.
+  void addPort(int port) {
+    ports_.push_back(port);
+  }
 
   // 호스트와 설치된 서비스를 전부 초기화한다.
   void initialize() {
