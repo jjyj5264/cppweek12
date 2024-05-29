@@ -1,4 +1,4 @@
-#ifndef ECHO_SERVICE_H
+  #ifndef ECHO_SERVICE_H
 #define ECHO_SERVICE_H
 
 #include "host.h"
@@ -10,8 +10,24 @@
 class EchoService : public Service {
   friend class EchoServiceInstaller;
 
-private:
+  private:
   EchoService(Host *host, short port) : Service(host, port) {}
+
+  public:
+  // TODO : 수신한 패킷을 전송자에게 다시 전송하는 메서드를 구현하라.
+  void recieve(Packet *packet) {
+    std::cout << "EchoService: received \"" << packet->dataString()
+    << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << std::endl;
+    
+    Address srcAddress_ = host_->address();
+    short srcPort_ = port_;
+
+    // this should be deleted in proper time
+    Packet *newPacket = new Packet(srcAddress_, packet->srcAddress(), srcPort_, packet->srcPort(), packet->dataString());
+
+    // 패킷을 호스트에 전달
+    host_->send(newPacket);
+  }
 };
 
 #endif

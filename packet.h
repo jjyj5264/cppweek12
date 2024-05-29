@@ -6,7 +6,7 @@
 #include <vector>
 
 class Packet {
-public:
+  public:
   Packet(Address srcAddress, Address destAddress, short srcPort, short destPort,
          std::string data)
       : srcAddress_(srcAddress), destAddress_(destAddress), srcPort_(srcPort),
@@ -45,7 +45,11 @@ public:
     return str;
   }
 
-private:
+  int size() {
+    return data_.size();
+  }
+
+  private:
   Address srcAddress_;
   Address destAddress_;
   short srcPort_;

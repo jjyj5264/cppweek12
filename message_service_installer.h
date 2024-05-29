@@ -6,18 +6,25 @@
 #include "service_installer.h"
 
 class MessageServiceInstaller : public ServiceInstaller {
-private:
+  private:
   // 목적지 주소
   Address destAddress_;
   // 목적지 포트
   short destPort_;
 
-public:
+  public:
   MessageServiceInstaller(const Address &destAddress, short destPort)
       : destAddress_(destAddress), destPort_(destPort) {}
 
   // 호스트에 MessageService를 설치한다
-  MessageService *install(Host *host);
+  MessageService *install(Host *host) {
+    // 포트는 service 클래스에서 지정할 것이므로, 따로 지정하지 않는다.
+    short port = -1; // ivalid port number, should be set in the service class
+    MessageService *service = new MessageService(host, port, destAddress_, destPort_);
+    ServiceInstaller::install(host, service);
+    
+    return service;
+  }
 };
 
 #endif

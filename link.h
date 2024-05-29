@@ -1,23 +1,30 @@
 #ifndef LINK_H
 #define LINK_H
 
+#include "node.h"
 #include "packet.h"
 #include <cstdlib>
-
-class Node;
+#include <iostream>
 
 class Link {
   friend class LinkInstaller;
 
-private:
+  private:
   Link(Node *nodeA, Node *nodeB) : nodeA_(nodeA), nodeB_(nodeB) {}
 
   Node *nodeA_;
   Node *nodeB_;
-  
+
   // 매개변수로 주어진 노드가 아닌 반대편 노드를 구한다.
   Node *other(const Node *node) const {
     return node == nodeA_ ? nodeB_ : nodeA_;
+  }
+
+  public:
+  void forwardPacket(Packet *packet, Node *srcNode) {
+    Node *destNode = other(srcNode);
+    std::cout << "Link: forwarding packet from node #" << srcNode->id() << ", to node #" << other(srcNode)->id() << std::endl;
+    destNode->receive(packet);
   }
 };
 

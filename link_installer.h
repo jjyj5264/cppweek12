@@ -5,9 +5,15 @@
 #include "service.h"
 
 class LinkInstaller {
-public:
+  public:
   // 노드 a, b 사이에 링크를 설치하고 반환한다.
-  Link *install(Node *a, Node *b);
+  Link *install(Node *nodeA, Node *nodeB) {
+    Link *link = new Link(nodeA, nodeB);
+    nodeA->addLink(link);
+    nodeB->addLink(link);
+    
+    return link;
+  }
 };
 
 #endif
