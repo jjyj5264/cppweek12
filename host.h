@@ -35,7 +35,7 @@ class Host : public Node {
     Link *selectedLink = links_[linkIndex];
 
     std::cout << "Host #" << id() << ": sending packet (from: " << packet->srcAddress().toString()
-              << ", to: " << packet->destAddress().toString() << packet->size() << " bytes)" << std::endl;
+              << ", to: " << packet->destAddress().toString() << ", " << packet->size() << " bytes)" << std::endl;
     selectedLink->forwardPacket(packet, this);
   }
   
@@ -54,16 +54,15 @@ class Host : public Node {
   void receive(Packet *packet) {
     for (Service *service : services_) {
       if (packet->destAddress() == address_ && packet->destPort() == service->port_) {
-        std::cout << "Host #" << id() << ": recieved packet, destination port: " << packet->destPort() << std::endl;
-
+        std::cout << "Host #" << id() << ": received packet, destination port: " << packet->destPort() << std::endl;
         service->recieve(packet); // send packet to service
-        // return;
+        return;
       }
     }
 
     // if packet does not match any service, delete it
     std::cout << "Host #" << id() << ": no service for packet (from: " << packet->srcAddress().toString()
-              << ", to: " << packet->destAddress().toString() << packet->size() << " bytes)" << std::endl;
+              << ", to: " << packet->destAddress().toString() << ", " << packet->size() << " bytes)" << std::endl;
     delete packet;
   }
 };

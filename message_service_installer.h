@@ -19,8 +19,7 @@ class MessageServiceInstaller : public ServiceInstaller {
   // 호스트에 MessageService를 설치한다
   MessageService *install(Host *host) {
     // 포트는 service 클래스에서 지정할 것이므로, 따로 지정하지 않는다.
-    short port = -1; // ivalid port number, should be set in the service class
-    MessageService *service = new MessageService(host, port, destAddress_, destPort_);
+    MessageService *service = new MessageService(host, -1, destAddress_, destPort_);
     ServiceInstaller::install(host, service);
     
     return service;

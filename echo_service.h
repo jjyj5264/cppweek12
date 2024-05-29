@@ -14,10 +14,9 @@ class EchoService : public Service {
   EchoService(Host *host, short port) : Service(host, port) {}
 
   public:
-  // TODO : 수신한 패킷을 전송자에게 다시 전송하는 메서드를 구현하라.
   void recieve(Packet *packet) {
     std::cout << "EchoService: received \"" << packet->dataString()
-    << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << std::endl;
+    << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << ", send reply with same data" << std::endl;
     
     Address srcAddress_ = host_->address();
     short srcPort_ = port_;

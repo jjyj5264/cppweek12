@@ -27,15 +27,16 @@ class Router : public Node {
     for (RoutingEntry &entry : routingTable_) { // & isn't necessary
       if (entry.destination == destAddress) {
         std::cout << "Router #" << id() << ": forwarding packet (from: " << packet->srcAddress().toString()
-                  << ", to: " << packet->destAddress().toString() << packet->size() << " bytes)" << std::endl;
+                  << ", to: " << packet->destAddress().toString() << ", " << packet->size() << " bytes)" << std::endl;
         entry.nextLink->forwardPacket(packet, this);
+        found = true;
         break;
       }
     }
 
     if (!found) {
       std::cout << "Router #" << id() << ": no route for packet (from: " << packet->srcAddress().toString()
-                << ", to: " << packet->destAddress().toString() << packet->size() << " bytes)" << std::endl;
+                << ", to: " << packet->destAddress().toString() << ", " << packet->size() << " bytes)" << std::endl;
       delete packet;
     }
   }

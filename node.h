@@ -17,12 +17,9 @@ class Node {
   std::vector<Link *> links_; // 노드에 연결된 링크 목록
 
   public:
-  Node() : id_(nextId_++) {
-  }
+  Node() : id_(nextId_++) {}
 
-  int id() const {
-    return id_;
-  }
+  int id() const { return id_; }
 
   // 링크를 추가하는 메서드
   void addLink(Link *link) {
