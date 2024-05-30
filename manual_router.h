@@ -16,7 +16,6 @@ class ManualRouter : public Router {
 
   virtual ~ManualRouter() {}
 
-  // void recieve() 함수는 자신의 부모 클래스인 router 클래스의 것을 사용한다.
   void receive(Packet *packet) {
     Router::receive(packet);
   }
