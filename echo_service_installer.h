@@ -17,7 +17,7 @@ public:
   EchoService *install(Host *host) {
     EchoService *service = new EchoService(host, listenPort_);
     ServiceInstaller::install(host, service);
-    addUsedPort(listenPort_);
+    host->ports().push_back(listenPort_); // do this only for EchoService
 
     return service;
   }

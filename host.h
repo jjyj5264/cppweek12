@@ -18,23 +18,26 @@ class Host : public Node {
   // 설치된 서비스 목록
   std::vector<Service *> services_;
 
-  // 설치된 서비스들이 사용하는 포트 목록
-  std::vector<int> ports_;
+  // 현재 호스트에 설치된 모든 서비스들의 포트 번호 목록
+  std::vector<short> ports_;
 
   public:
   Address address() { return address_; }
   Host(Address address) : address_(address) {}
 
-  // 포트 목록에 포트를 추가한다.
-  void addPort(int port) {
-    ports_.push_back(port);
-  }
+  std::vector<short>& ports() { return ports_; }
 
   // 호스트와 설치된 서비스를 전부 초기화한다.
   void initialize() {
     for (Service *service : services_) {
       service->initialize();
     }
+
+    // std::cout << "Host #" << id() << ": ports: ";
+    // for (short port : ports_) {
+    //   std::cout << port << " ";
+    // }
+    // std::cout << std::endl;
   }
 
   // 링크를 랜덤으로 하나 선택하여 패킷을 전송한다.
@@ -46,7 +49,7 @@ class Host : public Node {
               << ", to: " << packet->destAddress().toString() << ", " << packet->size() << " bytes)" << std::endl;
     selectedLink->forwardPacket(packet, this);
   }
-  
+
   // virtual destructor
   virtual ~Host() {
     for (Service *service : services_) {

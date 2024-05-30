@@ -12,10 +12,6 @@ class ServiceInstaller {
     host->addService(service);
     service->host_ = host; // Service에 Service가 설치된 Host의 포인터 주소를 저장한다.
   }
-
-  void addUsedPort(short port) {
-    Service::usedPorts_.push_back(port);
-  }
 };
 
 #endif
