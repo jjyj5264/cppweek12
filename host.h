@@ -25,7 +25,7 @@ class Host : public Node {
   Address address() { return address_; }
   Host(Address address) : address_(address) {}
 
-  std::vector<short>& ports() { return ports_; }
+  std::vector<short> &ports() { return ports_; }
 
   // 호스트와 설치된 서비스를 전부 초기화한다.
   void initialize() {
@@ -63,6 +63,13 @@ class Host : public Node {
   }
 
   void receive(Packet *packet) {
+    // std::cout << "Installed Services(" << id() << "): " << std::endl;
+    // for (Service *service : services_) {
+    //   std::cout << service->port_ << " ";
+    // }
+    // std::cout << std::endl;
+    // 여러 service가 receive를 호출할 수 없는 이유는 host 내에서 port가 전부 다르기 때문이다.
+    // 그러므로 일치하는 케이스에서는 return;으로 종료해야 프로그램이 정상적으로 작동한다.
     for (Service *service : services_) {
       if (packet->destAddress() == address_ && packet->destPort() == service->port_) {
         std::cout << "Host #" << id() << ": received packet, destination port: " << packet->destPort() << std::endl;
