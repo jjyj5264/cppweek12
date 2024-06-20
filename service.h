@@ -2,11 +2,12 @@
 #define SERVICE_H
 
 #include "node.h"
+#include "object.h"
 #include <algorithm>
 
 class Host;
 
-class Service {
+class Service : public Object {
   friend class ServiceInstaller;
   friend class Host;
 
@@ -21,10 +22,10 @@ class Service {
 
   void initialize();
   short getAvailablePort();
-  virtual void recieve(Packet *packet) = 0;
+  virtual void receive(Packet *packet) = 0;
 
   public:
-  virtual ~Service() {}
+  std::string toString() { return Object::toString(); }
 };
 
 #endif

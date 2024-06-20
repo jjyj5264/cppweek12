@@ -20,6 +20,8 @@ class MessageService : public Service {
   MessageService(Host *host, short port, Address destAddress, short destPort)
       : Service(host, port), destAddress_(destAddress), destPort_(destPort) {}
 
+  std::string name() override { return "MessageService"; }
+
   public:
   // 메시지를 전송한다
   void send(std::string message) {
@@ -35,10 +37,11 @@ class MessageService : public Service {
     host_->send(packet);
   }
 
-  void recieve(Packet *packet) {
-    std::cout << "MessageService: received \"" << packet->dataString()
-    << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << std::endl;
-
+  void receive(Packet *packet) override {
+    std::string fromAddress = packet->srcAddress().toString();
+    std::string fromPort = std::to_string(packet->srcPort());
+    std::string data = packet->dataString();
+    log("received \"" + data + "\" from " + fromAddress + ":" + fromPort);
     delete packet;
   }
 };

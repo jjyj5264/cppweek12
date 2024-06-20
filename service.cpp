@@ -2,12 +2,9 @@
 #include "host.h"
 
 void Service::initialize() {
-  // std::cout << "Service::initialize()" << std::endl;
   if (port_ == -1) {
-    // std::cout << "Service::initialize() - port_ is -1" << std::endl;
     port_ = getAvailablePort();
   } else { // for manually assigned port numbers like ECHO_PORT
-    // std::cout << "Service::initialize() - port_ is not -1" << std::endl;
     host_->ports().push_back(port_);
   }
 }

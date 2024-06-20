@@ -13,10 +13,14 @@ class EchoService : public Service {
   private:
   EchoService(Host *host, short port) : Service(host, port) {}
 
+  std::string name() override { return "EchoService"; }
+
   public:
-  void recieve(Packet *packet) {
-    std::cout << "EchoService: received \"" << packet->dataString()
-    << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << ", send reply with same data" << std::endl;
+  void receive(Packet *packet) override {
+    std::string fromAddress = packet->srcAddress().toString();
+    std::string fromPort = std::to_string(packet->srcPort());
+    std::string data = packet->dataString();
+    log("received \"" + data + "\" from " + fromAddress + ":" + fromPort + ", send reply with same data");
     
     Address srcAddress_ = host_->address();
     short srcPort_ = port_;
@@ -26,6 +30,8 @@ class EchoService : public Service {
 
     // 패킷을 호스트에 전달
     host_->send(newPacket);
+
+    delete packet;
   }
 };
 

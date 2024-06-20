@@ -1,13 +1,20 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
+OBJECTS = simulator.o object.o node.o service.o
 
-all: first second
+all: first second third forth
 
-node.o: node.cpp
-	$(CC) $(CFLAGS) -c node.cpp
+first: first.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o first first.o $(OBJECTS)
 
-service.o: service.cpp
-	$(CC) $(CFLAGS) -c service.cpp
+second: second.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o second second.o $(OBJECTS)
+
+third: third.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o third third.o $(OBJECTS)
+
+forth: forth.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o forth forth.o $(OBJECTS)
 
 first.o: scenarios/first.cpp
 	$(CC) $(CFLAGS) -c scenarios/first.cpp
@@ -15,11 +22,23 @@ first.o: scenarios/first.cpp
 second.o: scenarios/second.cpp
 	$(CC) $(CFLAGS) -c scenarios/second.cpp
 
-first: first.o node.o service.o
-	$(CC) $(CFLAGS) -o first first.o node.o service.o
+third.o: scenarios/third.cpp
+	$(CC) $(CFLAGS) -c scenarios/third.cpp
 
-second: second.o node.o service.o
-	$(CC) $(CFLAGS) -o second second.o node.o service.o
+forth.o: scenarios/forth.cpp
+	$(CC) $(CFLAGS) -c scenarios/forth.cpp
+
+simulator.o: simulator.cpp
+	$(CC) $(CFLAGS) -c simulator.cpp
+
+object.o: object.cpp
+	$(CC) $(CFLAGS) -c object.cpp
+
+node.o: node.cpp
+	$(CC) $(CFLAGS) -c node.cpp
+
+service.o: service.cpp
+	$(CC) $(CFLAGS) -c service.cpp
 
 clean:
-	rm -f *.o first second
+	rm -f *.o *.exe first second third forth
