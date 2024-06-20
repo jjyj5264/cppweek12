@@ -80,9 +80,12 @@ class AutoRouter : public Router {
     for (auto &iterator : linkMap) {
       Node *node = iterator.first;
       Link *link = iterator.second;
-      if (link == nullptr || node == this)
+
+      if (link == nullptr || node == this) {
         continue; // 시작 Node와 연결되지 않은 Node는 pass
-      if (Host *host = dynamic_cast<Host *>(node)) {
+      }
+
+      if (Host *host = dynamic_cast<Host *>(node)) { // node(iterator.first)는 Host인가
         this->routingTable_.push_back({host->address(), link});
       }
     }
